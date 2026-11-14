@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEU Market · Entra con tu correo del CEU</title>
+<meta name="description" content="CEU Market: compraventa de segunda mano entre estudiantes de la Universidad CEU San Pablo. De estudiante a estudiante.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#123285; --noche:#070850; --lima:#C6F04A; --claro:#DDE3F4; --hielo:#F3F6FA; --plata:#C9CFDA;
+  --texto-suave:#4A5275; --error:#B3261E; --blanco:#FFFFFF;
+}
+*{box-sizing:border-box}
+html{font-size:100%}
+body{margin:0;background:var(--hielo);color:var(--noche);font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:1rem;line-height:1.5}
+a{color:var(--azul)}a:hover{color:var(--noche)}
+:focus-visible{outline:3px solid var(--lima);outline-offset:2px;box-shadow:0 0 0 2px var(--noche)}
+button,input{font-family:inherit;font-size:inherit}
+[hidden]{display:none !important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.layout{display:flex;flex-wrap:wrap;min-height:calc(100vh - 0px)}
+.marca{flex:1 1 520px;background:var(--azul);color:var(--blanco);padding:3rem 4rem 4rem;display:flex;flex-direction:column;gap:3rem}
+.acceso{flex:1 1 520px;padding:3rem;display:flex;align-items:center;justify-content:center}
+.acceso-inner{width:100%;max-width:35rem;display:flex;flex-direction:column;gap:1.25rem}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:.75rem;font-size:1.625rem}
+.logo b{font-weight:800}.logo span{font-weight:500}
+.idioma{display:flex;background:var(--noche);border-radius:999px;padding:4px;gap:4px}
+.idioma button{min-width:48px;height:44px;border-radius:999px;border:none;font-weight:700;font-size:.9375rem;cursor:pointer;background:transparent;color:var(--blanco)}
+.idioma button[aria-pressed="true"]{background:var(--lima);color:var(--noche)}
+
+.hero{display:flex;flex-direction:column;gap:1.25rem;align-items:flex-start;margin-top:auto}
+.etiqueta{background:var(--lima);color:var(--noche);font-weight:700;font-size:.9375rem;padding:.45rem .875rem;border-radius:999px}
+.hero h1{margin:0;font-size:clamp(2.75rem,5vw,4.25rem);line-height:1;font-weight:800;letter-spacing:-.03em}
+.hero p{margin:0;font-size:1.3rem;line-height:1.45;font-weight:500;max-width:35rem}
+.ventajas{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.75rem}
+.ventajas li{display:flex;flex-direction:column;gap:.625rem;padding:1.125rem;background:var(--noche);border-radius:18px;font-weight:500}
+.ico{width:40px;height:40px;border-radius:12px;background:var(--azul);color:var(--lima);display:flex;align-items:center;justify-content:center}
+
+.tarjeta{background:var(--blanco);border:1px solid var(--plata);border-radius:20px;padding:2.25rem;display:flex;flex-direction:column;gap:1rem}
+.tarjeta h2{margin:0;font-size:2rem;font-weight:800;line-height:1.15}
+.suave{margin:0;color:var(--texto-suave);font-size:1.0625rem}
+.centro{text-align:center}
+label.campo{font-weight:700;font-size:1.0625rem}
+.input{height:56px;border-radius:14px;border:2px solid var(--plata);padding:0 1rem;font-size:1.0625rem;color:var(--noche);background:var(--hielo);width:100%}
+.input[aria-invalid="true"]{border-color:var(--error)}
+.input-codigo{height:72px;font-size:2.25rem;font-weight:800;letter-spacing:.5em;text-align:center;padding-left:.5em}
+.ayuda{margin:0;font-size:.9375rem;color:var(--texto-suave);min-height:1.4em}
+.ayuda.error{color:var(--error);font-weight:700}
+.btn{height:58px;border:none;border-radius:16px;background:var(--azul);color:var(--blanco);font-weight:700;font-size:1.0625rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.625rem;padding:0 1.25rem;text-decoration:none}
+.btn:hover{background:var(--noche);color:var(--blanco)}
+.btn[disabled]{background:var(--plata);color:var(--noche);cursor:not-allowed}
+.btn-sec{height:52px;border-radius:16px;border:2px solid var(--azul);background:var(--blanco);color:var(--azul);font-weight:700;font-size:1rem;cursor:pointer;padding:0 1.25rem}
+.btn-sec:hover{background:var(--claro)}
+.btn-sec[disabled]{border-color:var(--plata);color:var(--texto-suave);cursor:not-allowed;background:var(--hielo)}
+.enlace{background:none;border:none;color:var(--azul);font-weight:700;text-decoration:underline;cursor:pointer;min-height:44px;padding:0;align-self:flex-start}
+.fila{display:flex;gap:.625rem;flex-wrap:wrap}
+.fila > *{flex:1 1 12rem}
+.aviso{display:flex;gap:.75rem;align-items:flex-start;background:var(--claro);border-radius:16px;padding:1rem 1.125rem;font-size:.9375rem}
+.aviso.error{background:#FBE9E7}
+.correo-destino{font-weight:800;color:var(--noche);overflow-wrap:anywhere}
+
+.facultades{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.625rem}
+.facultades button{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:.625rem;padding:.875rem 1rem;background:var(--blanco);border:1px solid var(--plata);border-radius:16px;color:var(--noche);font-weight:700;font-size:1rem;line-height:1.3;text-align:left;cursor:pointer}
+.facultades button:hover{border-color:var(--azul);background:var(--claro)}
+
+.config-banner{background:#FFF4D6;color:var(--noche);padding:.75rem 1.5rem;font-size:.9375rem;text-align:center;border-bottom:1px solid var(--plata)}
+
+/* Cookies */
+.cookies{position:fixed;left:1.5rem;right:1.5rem;bottom:1.5rem;max-width:55rem;margin:0 auto;background:var(--blanco);border:1px solid var(--plata);border-radius:20px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;box-shadow:0 16px 48px rgba(7,8,80,.24);z-index:40}
+.cookies-fila{display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center}
+.cookies-texto{flex:999 1 24rem;display:flex;flex-direction:column;gap:.375rem}
+.cookies-texto h2{margin:0;font-size:1.25rem;font-weight:800}
+.cookies-texto p{margin:0}
+.cookies-botones{flex:1 1 25rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
+.cookies-botones button{min-height:50px;border:none;border-radius:14px;background:var(--azul);color:var(--blanco);font-weight:700;font-size:.9375rem;cursor:pointer;padding:0 .5rem}
+.cookies-botones button:hover{background:var(--noche)}
+.cookies fieldset{border:1px solid var(--plata);border-radius:14px;margin:0;padding:.5rem 1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:.75rem}
+.cookies legend{font-size:.875rem;font-weight:700;padding:0 .375rem}
+.cookies label{min-height:44px;display:flex;align-items:center;gap:.625rem}
+.cookies input[type=checkbox]{width:22px;height:22px;accent-color:var(--azul)}
+
+/* Pie */
+footer{background:var(--noche);color:var(--blanco);padding:2.25rem 1.5rem 2.5rem}
+.pie{max-width:80rem;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem}
+.pie-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem}
+.pie a{color:var(--blanco)}
+.pie a:hover{color:var(--lima)}
+.pie ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
+.pie ul a,.pie ul button{display:inline-flex;align-items:center;min-height:44px;font-weight:500;color:var(--blanco);background:none;border:none;text-decoration:underline;cursor:pointer;padding:0}
+.redes{display:flex;gap:.625rem}
+.redes a{width:48px;height:48px;border-radius:14px;background:var(--azul);display:flex;align-items:center;justify-content:center}
+.pie-legal{border-top:1px solid var(--azul);padding-top:1.25rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem;color:var(--claro);font-size:.9375rem}
+.pie-legal p{margin:0}
+
+@media (max-width: 760px){
+  .marca{padding:1.5rem 1.25rem 2.5rem;gap:2rem;border-radius:0 0 28px 28px}
+  .acceso{padding:1.75rem 1.25rem 3rem}
+  .tarjeta{padding:1.5rem 1.25rem}
+  .tarjeta h2{font-size:1.5rem}
+  .facultades{grid-template-columns:1fr}
+  .cookies{left:.75rem;right:.75rem;bottom:.75rem;padding:1.25rem}
+}
+</style>
+</head>
+<body>
+<div id="aviso-config" class="config-banner" hidden role="status">
+  <strong>Modo vista previa:</strong> el envío de códigos solo funciona con la web publicada en Netlify desde GitHub (mira el LEEME).
+</div>
+
+<div class="layout">
+  <section class="marca">
+    <div class="top">
+      <div class="logo">
+        <svg width="48" height="37" viewBox="-4 -4 128 92" fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 50 V30 Q14 16 28 16 H96 M86 4 L98 16 L86 28" stroke="#FFFFFF"/><path d="M106 34 V54 Q106 68 92 68 H24 M34 56 L22 68 L34 80" stroke="#C6F04A"/></svg>
+        <span class="sr">CEU Market</span><span aria-hidden="true"><b>CEU</b> <span>Market</span></span>
+      </div>
+      <div class="idioma" role="group" data-i18n-aria="langLabel" aria-label="Idioma">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <div class="hero">
+      <span class="etiqueta" data-i18n="tag">Solo para la comunidad CEU</span>
+      <h1 data-i18n="h1">De estudiante a estudiante</h1>
+      <p data-i18n="sub">La tienda online de reventa de la comunidad CEU: fácil, rápida, cómoda y segura.</p>
+    </div>
+    <ul class="ventajas">
+      <li><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 12h16M10 7.5h4M10 16.5h4"/></svg></span><span data-i18n="p1">Entrega en taquilla del campus</span></li>
+      <li><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span><span data-i18n="p2">Pago por Bizum al vendedor</span></li>
+      <li><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><span data-i18n="p3">Solo estudiantes verificados</span></li>
+    </ul>
+  </section>
+
+  <main class="acceso">
+    <div class="acceso-inner">
+      <!-- Paso 1: inicio -->
+      <section id="paso-inicio" class="tarjeta" aria-labelledby="h-inicio">
+        <h2 id="h-inicio" data-i18n="h2">Compra y vende entre compañeros</h2>
+        <p class="suave" data-i18n="p">Libros, apuntes, calculadoras, batas… Lo que ya no usas le sirve a alguien de tu campus.</p>
+        <button type="button" class="btn" id="btn-empezar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <span data-i18n="btn">Entrar con tu correo del CEU</span>
+        </button>
+        <p class="suave centro" style="font-size:.9375rem" data-i18n="only">Solo con cuentas @usp.ceu.es</p>
+      </section>
+
+      <!-- Paso 2: correo -->
+      <form id="paso-correo" class="tarjeta" novalidate hidden aria-labelledby="h-correo">
+        <h2 id="h-correo" data-i18n="hCorreo">Te mandamos un código</h2>
+        <label class="campo" for="correo" data-i18n="emailLabel">Tu correo del CEU</label>
+        <input class="input" id="correo" name="correo" type="email" autocomplete="email" inputmode="email" placeholder="nombre.apellido@usp.ceu.es" aria-describedby="correo-ayuda" required>
+        <p id="correo-ayuda" class="ayuda" role="alert" data-i18n="helpCorreo">Te enviaremos un código de 6 cifras para entrar.</p>
+        <button type="submit" class="btn" id="btn-enviar"><span data-i18n="enviar">Enviarme el código</span></button>
+        <button type="button" class="enlace" id="btn-volver-inicio" data-i18n="volver">Volver</button>
+      </form>
+
+      <!-- Paso 3: código -->
+      <form id="paso-codigo" class="tarjeta" novalidate hidden aria-labelledby="h-codigo">
+        <h2 id="h-codigo" data-i18n="hCodigo">Revisa tu correo</h2>
+        <p class="suave"><span data-i18n="codigoEnviado">Hemos enviado un código de 6 cifras a</span> <span class="correo-destino" id="correo-destino"></span></p>
+        <label class="campo" for="codigo" data-i18n="codigoLabel">Escribe el código</label>
+        <input class="input input-codigo" id="codigo" name="codigo" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6" aria-describedby="codigo-ayuda" required>
+        <p id="codigo-ayuda" class="ayuda" role="alert" data-i18n="helpCodigo">Si no lo ves, mira en la carpeta de spam o correo no deseado.</p>
+        <button type="submit" class="btn" id="btn-verificar"><span data-i18n="verificar">Entrar</span></button>
+        <div class="fila">
+          <button type="button" class="btn-sec" id="btn-reenviar" data-i18n="reenviar">Reenviar código</button>
+          <button type="button" class="btn-sec" id="btn-cambiar" data-i18n="cambiar">Cambiar correo</button>
+        </div>
+      </form>
+
+      <!-- Paso 4: facultad -->
+      <section id="paso-facultad" hidden aria-labelledby="h-fac" style="display:flex;flex-direction:column;gap:.875rem">
+        <div class="aviso" role="status">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#123285" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:2px"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          <span><span data-i18n="verificado">Correo verificado:</span> <strong id="correo-ok"></strong></span>
+        </div>
+        <h2 id="h-fac" style="margin:0;font-size:2rem;font-weight:800" data-i18n="facH">Elige tu facultad</h2>
+        <p class="suave" data-i18n="facP">Te enseñamos primero lo que se vende cerca de ti. Puedes cambiarla cuando quieras.</p>
+        <div class="facultades" id="lista-facultades"></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="pie">
+    <div class="pie-top">
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        <div class="logo" style="font-size:1.25rem">
+          <svg width="36" height="28" viewBox="-4 -4 128 92" fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 50 V30 Q14 16 28 16 H96 M86 4 L98 16 L86 28" stroke="#FFFFFF"/><path d="M106 34 V54 Q106 68 92 68 H24 M34 56 L22 68 L34 80" stroke="#C6F04A"/></svg>
+          <span><b>CEU</b> <span>Market</span></span>
+        </div>
+        <span style="color:var(--claro);font-weight:500" data-i18n="claim">De estudiante a estudiante</span>
+      </div>
+      <div class="redes">
+        <a href="https://www.instagram.com/ceumarket" aria-label="CEU Market en Instagram (@ceumarket)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+        <a href="https://www.tiktok.com/@ceumarket" aria-label="CEU Market en TikTok (@ceumarket)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 3 2.5 5 6 5"/></svg></a>
+      </div>
+    </div>
+    <nav aria-label="Información legal y ayuda">
+      <ul>
+        <li><a href="#" data-i18n="fLegal">Aviso legal</a></li>
+        <li><a href="#" data-i18n="fPriv">Privacidad</a></li>
+        <li><button type="button" id="abrir-cookies" data-i18n="fCookies">Cookies</button></li>
+        <li><a href="#" data-i18n="fCond">Condiciones de venta</a></li>
+        <li><a href="#" data-i18n="fAyuda">Ayuda</a></li>
+      </ul>
+    </nav>
+    <div class="pie-legal">
+      <p data-i18n="fInter">CEU Market es un intermediario entre estudiantes: no compra ni vende los productos publicados.</p>
+      <p>@ceumarket · Universidad CEU San Pablo</p>
+    </div>
+  </div>
+</footer>
+
+<section id="cookies" class="cookies" role="dialog" aria-labelledby="h-cookies" hidden>
+  <div class="cookies-fila">
+    <div class="cookies-texto">
+      <h2 id="h-cookies" data-i18n="ckH">Tú decides sobre las cookies</h2>
+      <p><span data-i18n="ckP">Usamos cookies técnicas para que CEU Market funcione y, si nos dejas, analíticas para mejorarlo.</span> <a href="#" data-i18n="ckLink" style="font-weight:700">Política de cookies</a></p>
+    </div>
+    <div class="cookies-botones">
+      <button type="button" id="ck-aceptar" data-i18n="ckA">Aceptar</button>
+      <button type="button" id="ck-rechazar" data-i18n="ckR">Rechazar</button>
+      <button type="button" id="ck-config" aria-expanded="false" aria-controls="ck-panel" data-i18n="ckC">Configurar</button>
+    </div>
+  </div>
+  <fieldset id="ck-panel" hidden>
+    <legend data-i18n="ckConfig">Tus preferencias</legend>
+    <label><input type="checkbox" checked disabled> <span data-i18n="ckTec">Técnicas (siempre activas)</span></label>
+    <label><input type="checkbox" id="ck-analiticas"> <span data-i18n="ckAna">Analíticas</span></label>
+    <label><input type="checkbox" id="ck-personal"> <span data-i18n="ckPer">Personalización</span></label>
+  </fieldset>
+</section>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
