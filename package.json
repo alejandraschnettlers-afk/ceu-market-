@@ -1,0 +1,9 @@
+{
+  "name": "ceu-market",
+  "private": true,
+  "type": "module",
+  "description": "CEU Market · De estudiante a estudiante",
+  "dependencies": {
+    "nodemailer": "6.9.14"
+  }
+}
